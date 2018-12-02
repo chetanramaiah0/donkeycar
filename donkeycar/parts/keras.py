@@ -11,6 +11,8 @@ from tensorflow.python.keras.models import Model, load_model
 from tensorflow.python.keras.layers import Convolution2D
 from tensorflow.python.keras.layers import Dropout, Flatten, Dense
 from tensorflow.python.keras.callbacks import ModelCheckpoint, EarlyStopping
+from PIL import Image, ImageFilter
+import numpy as np
 
 
 class KerasPilot:
@@ -70,6 +72,9 @@ class KerasLinear(KerasPilot):
             self.model = default_linear()
 
     def run(self, img_arr):
+        image = Image.fromarray(img_arr)
+        image_filter = image.filter(ImageFilter.FIND_EDGES)
+        img_arr = np.asarray(image_filter)
         img_arr = img_arr.reshape((1,) + img_arr.shape)
         outputs = self.model.predict(img_arr)
         # print(len(outputs), outputs)
