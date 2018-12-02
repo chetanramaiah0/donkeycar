@@ -72,9 +72,6 @@ class KerasLinear(KerasPilot):
             self.model = default_linear()
 
     def run(self, img_arr):
-        image = Image.fromarray(img_arr)
-        image_filter = image.filter(ImageFilter.FIND_EDGES)
-        img_arr = np.asarray(image_filter)
         img_arr = img_arr.reshape((1,) + img_arr.shape)
         outputs = self.model.predict(img_arr)
         # print(len(outputs), outputs)

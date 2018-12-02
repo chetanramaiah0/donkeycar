@@ -1,7 +1,7 @@
 import os
 import time
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageFilter
 import glob
 
 
@@ -44,7 +44,8 @@ class PiCamera(BaseCamera):
         for f in self.stream:
             # grab the frame from the stream and clear the stream in
             # preparation for the next frame
-            self.frame = f.array
+            image = Image.fromarray( f.array)
+            self.frame = np.asarray(image.filter(ImageFilter.FIND_EDGES))
             self.rawCapture.truncate(0)
 
             # if the thread indicator variable is set, stop the thread
